@@ -1,5 +1,6 @@
 const neta = documents.querySelecter('.add');
 const list = documnents.querySelecter('.Neta');
+const search = document.querySelector('.search input');
 
 (function(){
     // 初期化処理
@@ -10,7 +11,7 @@ const list = documnents.querySelecter('.Neta');
             list.innerHTML += localStorage.getItem(key);
         }
     }
-})();
+});
 
 const saveTaskToLocalStorage = (task, html) => {
     // null は、localStorage に保存しない
@@ -52,4 +53,21 @@ neta.addEventListener('click', e => {
         const task = e.target.parentElement.textContent.trim()
         deleteTaskFromLocalStorage(task);
     }
+});
+
+const filterTasks = (term) => {
+
+    Array.from(list.children)
+        .filter((todo) => !todo.textContent.toLowerCase().includes(term))
+        .forEach((todo) => todo.classList.add('filtered'));
+
+    Array.from(list.children)
+        .filter((todo) => todo.textContent.toLowerCase().includes(term))
+        .forEach((todo) => todo.classList.remove('filtered'));
+};
+
+search.addEventListener('keyup', () => {
+    // 空白削除かつ、小文字に変換(大文字・小文字の区別をなくす)
+    const term = search.value.trim().toLowerCase();
+    filterTasks(term);
 });
