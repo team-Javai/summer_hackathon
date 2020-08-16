@@ -5,13 +5,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class game_BINGO {
-    public static void main(String[] args) {
+    public int start() {
+
 
         ArrayList<Integer> list = new ArrayList<>();
         Scanner sca = new Scanner(System.in);
         int[][] you = new int[5][5];
         int[] ball = new int[50];
-        int i, j, k, sum1, sum2, sum3 = 0, sum4 = 0;
+        int i, j, k, sum1, sum2, sum3, sum4;
 
         for (i = 1; i <= 50; i++) { /*ボールの値を入れる*/
             list.add(i);
@@ -46,7 +47,7 @@ public class game_BINGO {
         System.out.print(" ボールを引いてね (y / n) > ");
         if (sca.nextLine().charAt(0) != 'y') {
             System.out.println("ゲームをやめます");
-            return;
+            return 0;
 
         }
 
@@ -76,38 +77,40 @@ public class game_BINGO {
                 }
                 System.out.println();
             }
-            for (i = 0; i < 5; i++){
-                sum3 += you[i][i];
-                sum4 += you[i][4-i];
-            }
+
 
             for (i = 0; i < 5; i++) {
                 sum1 = 0;
                 sum2 = 0;
+                sum3 = 0;
+                sum4 = 0;
 
                 for (j = 0; j < 5; j++) {
                     sum1 += you[i][j]; // [you] 横の足し算
                     sum2 += you[j][i]; // [you] 縦の足し算
                 }
 
-
+                for (i = 0; i < 5; i++){
+                    sum3 += you[i][i];
+                    sum4 += you[i][4-i];
+                }
 
                 if (sum1 == 0 || sum2 == 0 || sum3 == 0 || sum4 == 0) {
                     System.out.println(" ★☆★ ビンゴ！ おめでとうございます！ ☆★☆ ");
-                    return;
+                    return 1;
                 }
 
                 }
                 System.out.print(" 次のボールを引いてね (y / n) > ");
                 if (sca.nextLine().charAt(0) != 'y') {
                     System.out.println("ゲームをやめます");
-                    return;
+                    return 0;
 
                 }
 
             }
         System.out.println(" あなたの負けです！　またの挑戦をお待ちしております");
-
+        return 0;
         }
 
     }
